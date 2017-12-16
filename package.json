@@ -31,6 +31,7 @@
   "assembly": {
     "namespace": "ms",
     "components": [
+      "main",
       "broker"
     ]
   },

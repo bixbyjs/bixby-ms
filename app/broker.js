@@ -1,4 +1,4 @@
-exports = module.exports = function(IoC, google, logger) {
+exports = module.exports = function(IoC, amqp, google, logger) {
   var Factory = require('fluidfactory');
   
   
@@ -16,6 +16,7 @@ exports = module.exports = function(IoC, google, logger) {
           });
         })
         .then(function() {
+          //factory.use(amqp);
           factory.use(google);
         })
         .then(function() {
@@ -32,6 +33,7 @@ exports['@implements'] = 'http://i.bixbyjs.org/ms/Broker';
 exports['@singleton'] = true;
 exports['@require'] = [
   '!container',
+  './broker/amqp',
   './broker/google',
   'http://i.bixbyjs.org/Logger'
 ];
