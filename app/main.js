@@ -5,22 +5,24 @@ exports = module.exports = function(agent) {
     // options.headers
     // options.body
     
-    console.log('PUBLISH:');
-    console.log(url);
-    //console.log(options);
+    options.url = url;
     
-    var conn = agent.connection(url);
     
-    var topic = 'host+org.npmjs.registry';
-    console.log('  to: ' + topic);
+    var ctx = agent.getContext(options);
     
-    conn.connect(); // move this, build options
+    var conn = agent._connections[ctx.name];
+    if (conn) {
+      
+    } else {
+      conn = agent.createConnection(ctx);
+      
+      conn.connect(); // move this, build options
     
-    conn.publish(topic, options, function(err) {
-      //console.log('PUBLISHED!');
-      //console.log(err);
-    })
-    
+      conn.publish(ctx.topic, options, function(err) {
+        //console.log('PUBLISHED!');
+        //console.log(err);
+      })
+    }
   }
   
   return api;
