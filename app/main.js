@@ -8,31 +8,33 @@ exports = module.exports = function(agent) {
     options.url = url;
     
     
-    var ctx = agent.getContext(options);
+    // TODO: try catch this...
+    var name = agent.getName(options);
+    var topic = agent.parseTopic(url, options);
     
-    var conn = agent._connections[ctx.name];
+    var conn = agent._connections[name];
     if (conn) {
       
     } else {
-      conn = agent.createConnection(ctx);
+      conn = agent.createConnection(options);
+      agent.addConnection(conn);
+      
       conn.once('ready', function() {
-        conn.publish(ctx.topic, options, function(err) {
+        conn.publish(topic, options, function(err) {
           console.log('PUBLISHED!');
           console.log(err);
         });
       });
-      
-      // TODO: do once('error') here, for error handling
-      
-      conn.connect(ctx.options);
     }
   }
+  
+  api.globalAgent = agent;
   
   return api;
 };
 
-exports['@implements'] = 'http://i.bixbyjs.org/ms';
 exports['@singleton'] = true;
+exports['@implements'] = 'http://i.bixbyjs.org/ms';
 exports['@require'] = [
   './agent'
 ];
