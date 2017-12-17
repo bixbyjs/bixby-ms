@@ -15,13 +15,16 @@ exports = module.exports = function(agent) {
       
     } else {
       conn = agent.createConnection(ctx);
+      conn.once('ready', function() {
+        conn.publish(ctx.topic, options, function(err) {
+          console.log('PUBLISHED!');
+          console.log(err);
+        });
+      });
       
-      conn.connect(); // move this, build options
-    
-      conn.publish(ctx.topic, options, function(err) {
-        //console.log('PUBLISHED!');
-        //console.log(err);
-      })
+      // TODO: do once('error') here, for error handling
+      
+      conn.connect(ctx.options);
     }
   }
   
