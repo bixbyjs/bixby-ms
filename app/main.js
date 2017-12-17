@@ -1,4 +1,4 @@
-exports = module.exports = function() {
+exports = module.exports = function(agent) {
   var api = {};
   
   api.publish = function(url, options, cb) {
@@ -8,6 +8,19 @@ exports = module.exports = function() {
     console.log('PUBLISH:');
     console.log(url);
     //console.log(options);
+    
+    var conn = agent.connection(url);
+    
+    var topic = 'host+org.npmjs.registry';
+    console.log('  to: ' + topic);
+    
+    conn.connect(); // move this, build options
+    
+    conn.publish(topic, options, function(err) {
+      //console.log('PUBLISHED!');
+      //console.log(err);
+    })
+    
   }
   
   return api;
@@ -16,4 +29,5 @@ exports = module.exports = function() {
 exports['@implements'] = 'http://i.bixbyjs.org/ms';
 exports['@singleton'] = true;
 exports['@require'] = [
+  './agent'
 ];
