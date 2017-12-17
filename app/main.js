@@ -28,7 +28,9 @@ exports = module.exports = function(agent) {
     }
   }
   
-  api.globalAgent = agent;
+  api.createConnection = function(options, readyListener) {
+    return agent.createConnection(options, readyListener);
+  }
   
   return api;
 };
