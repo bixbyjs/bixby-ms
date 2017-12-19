@@ -10,7 +10,7 @@ exports = module.exports = function(agent) {
     
     // TODO: try catch this...
     var name = agent.getName(options);
-    var topic = agent.parseTopic(url, options);
+    var topic = agent.parseTopic(options);
     
     var conn = agent._connections[name];
     if (conn) {
@@ -30,6 +30,10 @@ exports = module.exports = function(agent) {
   
   api.createConnection = function(options, readyListener) {
     return agent.createConnection(options, readyListener);
+  }
+  
+  api.parseQueue = function(url) {
+    return agent.parseTopic({ url: url });
   }
   
   return api;
