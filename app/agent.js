@@ -24,7 +24,7 @@ exports = module.exports = function(IoC, logger) {
     });
 }
 
-exports['@implements'] = 'http://i.bixbyjs.org/ms/Agent';
+exports['@implements'] = 'http://i.bixbyjs.org/ms/Agent'; // TODO: remove this
 exports['@singleton'] = true;
 exports['@require'] = [
   '!container',
