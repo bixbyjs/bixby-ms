@@ -23,6 +23,8 @@ exports = module.exports = function(agent) {
         conn.publish(topic, options, function(err) {
           console.log('PUBLISHED!');
           console.log(err);
+          if (err) { return cb(err); }
+          return cb();
         });
       });
     }
