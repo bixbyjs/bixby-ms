@@ -10,7 +10,6 @@ exports = module.exports = function(agent) {
     
     // TODO: try catch this...
     var name = agent.getName(options);
-    var topic = agent.parseTopic(options);
     
     var conn = agent._connections[name];
     if (conn) {
@@ -19,8 +18,10 @@ exports = module.exports = function(agent) {
       conn = agent.createConnection(options);
       agent.addConnection(conn);
       
+      var l = conn.location.parse(url);
+      
       conn.once('ready', function() {
-        conn.publish(topic, options, function(err) {
+        conn.publish(l.topic, options, function(err) {
           console.log('PUBLISHED!');
           console.log(err);
           if (err) { return cb(err); }
