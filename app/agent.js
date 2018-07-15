@@ -6,12 +6,12 @@ exports = module.exports = function(IoC, logger) {
   
   return Promise.resolve(agent)
     .then(function(agent) {
-      var protoPlugIns = IoC.components('http://i.bixbyjs.org/ms/protocol');
+      var components = IoC.components('http://i.bixbyjs.org/ms/ProtocolPlugIn');
     
-      return Promise.all(protoPlugIns.map(function(plugin) { return plugin.create(); } ))
+      return Promise.all(components.map(function(c) { return c.create(); } ))
         .then(function(plugins) {
           plugins.forEach(function(plugin, i) {
-            logger.info('Loaded messaging protocol: ' + protoPlugIns[i].a['@name']);
+            logger.info('Loaded messaging protocol: ' + components[i].a['@protocol']);
             agent.use(plugin);
           });
         })

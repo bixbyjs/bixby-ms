@@ -5,7 +5,7 @@ exports = module.exports = function(agent) {
     // options.headers
     // options.body
     
-    options.url = url;
+    options.location = url;
     
     
     // TODO: try catch this...
