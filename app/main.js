@@ -22,8 +22,6 @@ exports = module.exports = function(agent) {
       
       conn.once('ready', function() {
         conn.publish(l.topic, options, function(err) {
-          console.log('PUBLISHED!');
-          console.log(err);
           if (err) { return cb(err); }
           return cb();
         });
